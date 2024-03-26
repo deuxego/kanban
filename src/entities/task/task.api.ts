@@ -1,5 +1,5 @@
 import { supabase } from 'shared/lib';
-import { CreateTaskParams, DeleteTaskParams, Task } from './task.types';
+import { CreateTaskParams, DeleteTaskParams, EditTaskParams, Task } from './task.types';
 
 export const getTasks = async (columnId: number) => {
   return (
@@ -22,4 +22,8 @@ export const createTask = async (params: CreateTaskParams): Promise<Task> => {
 
 export const deleteTask = async (params: DeleteTaskParams): Promise<Task> => {
   return (await supabase.from('tasks').delete().eq('id', params.id).select('*')).data![0];
+};
+
+export const editTask = async (params: EditTaskParams): Promise<Task> => {
+  return (await supabase.from('tasks').update({name: params.name}).eq('id', params.id).select('*')).data![0];
 };

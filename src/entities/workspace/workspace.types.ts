@@ -13,3 +13,8 @@ export interface CreateWorkspaceParams {
 export interface DeleteWorkspaceParams {
   id: number;
 }
+
+export interface EditWorkspaceParams {
+  id: number;
+  name: string;
+}

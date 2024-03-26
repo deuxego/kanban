@@ -13,6 +13,11 @@ export interface DeleteTaskParams {
   id: number;
 }
 
+export interface EditTaskParams {
+  id: number;
+  name: string;
+}
+
 export interface MoveTask {
   taskId: number;
   value: string;

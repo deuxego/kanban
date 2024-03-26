@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { useOptimisticCreateMutation, useOptimisticRemoveMutation } from 'shared/hooks';
+import { useOptimisticCreateMutation, useOptimisticEditMutation, useOptimisticRemoveMutation } from 'shared/hooks';
 import { queryClient } from 'shared/consts';
-import { CreateTaskParams, DeleteTaskParams, MoveTask, Task } from './task.types';
-import { createTask, deleteTask, getTasks } from './task.api';
+import { CreateTaskParams, DeleteTaskParams, EditTaskParams, MoveTask, Task } from './task.types';
+import { createTask, deleteTask, editTask, getTasks } from './task.api';
 
 export const useTasks = (columnId: number) => {
   return useQuery<Task[]>(['tasks', columnId], () => getTasks(columnId), {
@@ -23,9 +23,8 @@ export const useTaskDelete = (columnId: number) => {
   ]);
 };
 
-//* finish
 export const useTaskEdit = (columnId: number) => {
-  return useOptimisticRemoveMutation<DeleteTaskParams, DeleteTaskParams>(deleteTask, [
+  return useOptimisticEditMutation<Task, EditTaskParams>(editTask, [
     'tasks',
     columnId
   ]);

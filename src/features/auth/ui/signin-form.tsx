@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { signIn } from '../auth.service';
 
 export const SigninForm = () => {
   const [isError, setIsError] = useState(false);
+  const navigate = useNavigate();
 
   const [fields, setFields] = useState({
     email: '',
@@ -11,7 +12,7 @@ export const SigninForm = () => {
   });
 
   const handleSignin = () => {
-    signIn(fields.email, fields.password, setIsError);
+    signIn(fields.email, fields.password, setIsError, navigate);
   };
 
   const handleInput = ({ field, v }: { field: keyof typeof fields; v: string }) => {
@@ -59,6 +60,7 @@ export const SigninForm = () => {
             Sign up
           </Link>
         </div>
+        
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ interface AddColumnProps {
 
 export const AddColumn: React.FC<AddColumnProps> = ({ setIsCreating }) => {
   return (
-    <div onClick={() => setIsCreating(true)} className="column-title text-gray-400 cursor-pointer">
+    <div onClick={() => setIsCreating(true)} className="column-title text-gray-400 cursor-pointer text-nowrap">
       + Add column
     </div>
   );

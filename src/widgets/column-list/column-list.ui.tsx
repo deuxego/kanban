@@ -28,7 +28,7 @@ export const ColumnList = () => {
   };
 
   return (
-    <div className="flex items-start gap-8 max-w-[1150px] overflow-x-scroll scrollbar">
+    <div className="flex items-start gap-8 max-w-[1150px] overflow-x-scroll scrollbar scroll-container">
       {columns &&
         columns.map(
           ({ name, id }) =>
@@ -40,7 +40,10 @@ export const ColumnList = () => {
 
       {isCreating && <CreateColumnInput handleCreateColumn={handleCreateColumn} />}
 
-      <AddColumn setIsCreating={setIsCreating} />
+      <div className='pr-[30px]'>
+        <AddColumn setIsCreating={setIsCreating} />
+      </div>
+
     </div>
   );
 };

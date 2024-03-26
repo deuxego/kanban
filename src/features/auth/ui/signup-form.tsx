@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { signUp } from '../auth.service';
 import { useUserStore } from 'entities/user';
 
 export const SignupForm = () => {
+  const navigate = useNavigate();
+
   const [isError, setIsError] = useState(false);
   const { setAllUserData } = useUserStore();
-
+  
   const [fields, setFields] = useState({
     username: '',
     email: '',
@@ -14,7 +16,7 @@ export const SignupForm = () => {
   });
 
   const handleSignup = () => {
-    signUp(fields.username, fields.email, fields.password, setIsError, setAllUserData);
+    signUp(fields.username, fields.email, fields.password, setIsError, setAllUserData, navigate);
   };
 
   const handleInput = ({ field, v }: { field: keyof typeof fields; v: string }) => {

@@ -2,7 +2,12 @@ import { Session } from '@supabase/supabase-js';
 import { User, createUser } from 'entities/user';
 import { supabase } from 'shared/lib';
 
-export const signIn = async (email: string, password: string, setError: (v: boolean) => void) => {
+export const signIn = async (
+  email: string,
+  password: string,
+  setError: (v: boolean) => void,
+  navigate: (to: string) => void
+) => {
   try {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
@@ -14,7 +19,7 @@ export const signIn = async (email: string, password: string, setError: (v: bool
       } = await supabase.auth.getSession();
       setSessionTime(session as Session);
 
-      window.location.href = '/';
+      navigate('/');
     }
 
     if (error) {
@@ -30,7 +35,8 @@ export const signUp = async (
   email: string,
   password: string,
   setError: (v: boolean) => void,
-  setUser: (p: User) => void
+  setUser: (p: User) => void,
+  navigate: (to: string) => void
 ) => {
   try {
     const { data, error } = await supabase.auth.signUp({ email, password });
@@ -43,8 +49,9 @@ export const signUp = async (
       } = await supabase.auth.getSession();
       setSessionTime(session as Session);
 
-      setUser(await createUser({ username, email, id: data.user?.id }) as User);
-      window.location.href = '/';
+      setUser((await createUser({ username, email, id: data.user?.id })) as User);
+
+      navigate('/');
     }
 
     if (error) {

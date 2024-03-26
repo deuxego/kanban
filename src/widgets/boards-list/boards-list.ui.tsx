@@ -1,10 +1,11 @@
 import { useBoardCreate, useBoardDelete, useBoardEdit, useBoards } from 'entities/board';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LuKanban } from 'react-icons/lu';
 import { useNavigate, useParams } from 'react-router-dom';
 import { GoX } from 'react-icons/go';
 import { queryClient } from 'shared/consts';
-import { Edit } from './ui/edit';
+import { MdEdit } from 'react-icons/md';
+import { Edit } from 'shared/components';
 
 export const BoardsList = () => {
   const navigate = useNavigate();
@@ -35,7 +36,14 @@ export const BoardsList = () => {
   };
 
   const handleEdit = (v: string, id: number) => {
+    setIsEdit(null);
+    setValue(null);
     edit({ id, name: v });
+  };
+
+  const handleEditInit = (e: React.MouseEvent, id: number) => {
+    e.stopPropagation();
+    setIsEdit(id);
   };
 
   const handleNavigateBoard = (id: number) => {
@@ -67,12 +75,15 @@ export const BoardsList = () => {
               value={value}
               isEdit={isEdit}
               setValue={setValue}
-              setIsEdit={setIsEdit}
               handleEdit={handleEdit}
             />
 
             {hovered === id && (
               <GoX className="absolute top-2 right-2" onClick={(e) => handleDeleteBoard(e, id)} />
+            )}
+
+            {hovered === id && (
+              <MdEdit className="absolute top-2 left-2" onClick={(e) => handleEditInit(e, id)} />
             )}
           </div>
         ))}

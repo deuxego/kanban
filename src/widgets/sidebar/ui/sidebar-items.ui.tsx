@@ -1,14 +1,22 @@
 import { FC, ReactNode, useState } from 'react';
 import { ContentType } from '../sidebar.types';
-import { useWorkspaceCreate, useWorkspaceDelete, useWorkspaces } from 'entities/workspace';
-import { useBoardCreate, useBoardDelete, useBoards } from 'entities/board';
+import {
+  useWorkspaceCreate,
+  useWorkspaceDelete,
+  useWorkspaceEdit,
+  useWorkspaces
+} from 'entities/workspace';
+import { useBoardCreate, useBoardDelete, useBoardEdit, useBoards } from 'entities/board';
 
 import { LuKanban } from 'react-icons/lu';
 import { MdWorkspaces } from 'react-icons/md';
 import { IoIosClose } from 'react-icons/io';
 import { MdOutlineAdd } from 'react-icons/md';
+import { MdEdit } from 'react-icons/md';
+
 import classNames from 'classnames';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Edit } from 'shared/components';
 
 interface Props {
   userId: string;
@@ -31,6 +39,8 @@ export const SidebarItems: FC<Props> = ({ contentType, userId }) => {
   // useState hooks
   const [hovered, setHovered] = useState<number | null>(null);
   const [isCreating, setIsCreating] = useState(false);
+  const [value, setValue] = useState<string | null>(null);
+  const [isEdit, setIsEdit] = useState<number | null>(null);
 
   // useQuery
   const { data: workspaces } = useWorkspaces(userId as string);
@@ -39,10 +49,11 @@ export const SidebarItems: FC<Props> = ({ contentType, userId }) => {
   // useQuery mutations fn
   const { mutate: createWorkspace } = useWorkspaceCreate();
   const { mutate: removeWorkspace } = useWorkspaceDelete();
+  const { mutate: editWorkspace } = useWorkspaceEdit();
 
   const { mutate: createBoard } = useBoardCreate(Number(workspaceId));
   const { mutate: removeBoard } = useBoardDelete(Number(workspaceId));
-
+  const { mutate: editBoard } = useBoardEdit(Number(workspaceId));
   // handle fn
   const handleCreate = (value: string) => {
     if (value.length > 1) {
@@ -50,12 +61,22 @@ export const SidebarItems: FC<Props> = ({ contentType, userId }) => {
         ? createBoard({ name: value, workspace_id: Number(workspaceId) })
         : createWorkspace({ name: value, userId: userId as string });
     }
-
   };
 
   const handleRemove = (e: React.MouseEvent, id: number) => {
     e.stopPropagation();
     contentType === ContentType.BOARD ? removeBoard({ id }) : removeWorkspace({ id });
+  };
+
+  const handleInitEdit = (e: React.MouseEvent, id: number) => {
+    e.stopPropagation();
+    setIsEdit(id);
+  };
+
+  const handleEdit = (v: string, id: number) => {
+    setIsEdit(null);
+
+    contentType == ContentType.BOARD ? editBoard({ name: v, id }) : editWorkspace({ name: v, id });
   };
 
   // here we set items list
@@ -102,10 +123,22 @@ export const SidebarItems: FC<Props> = ({ contentType, userId }) => {
             >
               <div className="flex-y-center gap-2">
                 {icon}
-                {name}
+                <Edit
+                  id={id}
+                  name={name}
+                  value={value}
+                  isEdit={isEdit}
+                  setValue={setValue}
+                  handleEdit={handleEdit}
+                />
               </div>
 
-              {hovered === id && <IoIosClose onClick={(e) => handleRemove(e, id)} />}
+              <div className="flex-y-center gap-1">
+                {hovered === id && <MdEdit onClick={(e) => handleInitEdit(e, id)} />}
+                {hovered === id && (
+                  <IoIosClose className="w-6 h-6" onClick={(e) => handleRemove(e, id)} />
+                )}
+              </div>
             </div>
           ))}
       </div>
