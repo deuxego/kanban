@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useMutation } from 'react-query';
 import { queryClient } from '../consts';
 
@@ -48,6 +49,7 @@ export const useOptimisticRemoveMutation = <T extends object, P extends object>(
     onMutate: (params) => {
       queryClient.setQueryData(queryKey, (oldData) => {
         if (Array.isArray(oldData)) {
+          //@ts-ignore
           return oldData.filter((item) => item.id !== params.id);
         }
       });
@@ -65,9 +67,11 @@ export const useOptimisticEditMutation = <T extends object, P extends object>(
 ) => {
   return useMutation<T, Error, P>((params) => callback(params), {
     onMutate: (params) => {
+      //@ts-ignore
       queryClient.setQueryData(queryKey, (oldData) => {
         if (Array.isArray(oldData)) {
           return oldData.map((item) =>
+            //@ts-ignore
             params.id === item.id ? { ...item, name: params.name } : item
           );
         }

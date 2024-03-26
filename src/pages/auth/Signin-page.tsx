@@ -1,7 +1,5 @@
-import { SigninForm } from "features/auth"
+import { SigninForm } from 'features/auth';
 
 export const Signin = () => {
-  return (
-    <SigninForm />
-  )
-}
+  return <SigninForm />;
+};

@@ -1,2 +1,2 @@
-export * from './ui'
-export * from './auth.service'
+export * from './ui';
+export * from './auth.service';

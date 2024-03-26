@@ -25,7 +25,6 @@ export const useInit = () => {
         if (data) {
           navigate(`/workspace/${data[0]?.id ?? ''}`);
         }
-
       }
     };
 

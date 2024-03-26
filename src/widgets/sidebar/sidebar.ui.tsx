@@ -24,7 +24,6 @@ export const Sidebar = () => {
     <SidebarItems contentType={ContentType.WORKSPACE} userId={id as string} />
   );
 
-  
   return (
     <div className="sidebar">
       {id && content}

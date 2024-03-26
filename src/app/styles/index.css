@@ -74,7 +74,7 @@
     @apply flex items-center w-full bg-[rgba(217,217,217,.1)] justify-center text-sm text-gray-300 py-2 px-4 rounded-lg;
   }
 
-  .logout{
+  .logout {
     @apply flex-center font-bold w-full border-[.5px] border-gray-600 px-2 py-1 rounded-md;
   }
 

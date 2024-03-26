@@ -25,10 +25,11 @@ export const createWorkspace = async (params: CreateWorkspaceParams): Promise<Wo
   ).data![0];
 };
 
-export const deleteWorkspace = async (params: DeleteWorkspaceParams) => {
-  return (await supabase.from('workspaces').delete().eq('id', params.id)).data;
+export const deleteWorkspace = async (params: DeleteWorkspaceParams): Promise<Workspace> => {
+  return (await supabase.from('workspaces').delete().eq('id', params.id)).data![0];
 };
 
 export const editWorkspace = async (params: EditWorkspaceParams): Promise<Workspace> => {
-  return (await supabase.from('workspaces').update({ name: params.name }).eq('id', params.id)).data![0];
+  return (await supabase.from('workspaces').update({ name: params.name }).eq('id', params.id))
+    .data![0];
 };

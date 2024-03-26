@@ -5,7 +5,6 @@ import { MainPage } from 'pages/main';
 import { WorkspacePage } from 'pages/workspace';
 import { RouterProvider as BaseRouterProvider, createBrowserRouter } from 'react-router-dom';
 
-
 const router = createBrowserRouter([
   {
     path: '/auth',

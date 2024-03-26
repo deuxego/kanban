@@ -47,7 +47,13 @@ export const Column: FC<ColumnProps> = ({ columnId, name, handleRemoveColumn }) 
       <div className="flex flex-col gap-3">
         {tasks &&
           tasks.map(({ id, name }) => (
-            <Task id={id} columnId={columnId} name={name} key={id} handleRemoveTask={handleRemoveTask} />
+            <Task
+              id={id}
+              columnId={columnId}
+              name={name}
+              key={id}
+              handleRemoveTask={handleRemoveTask}
+            />
           ))}
       </div>
 

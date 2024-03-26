@@ -40,10 +40,9 @@ export const ColumnList = () => {
 
       {isCreating && <CreateColumnInput handleCreateColumn={handleCreateColumn} />}
 
-      <div className='pr-[30px]'>
+      <div className="pr-[30px]">
         <AddColumn setIsCreating={setIsCreating} />
       </div>
-
     </div>
   );
 };

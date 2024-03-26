@@ -60,7 +60,6 @@ export const SigninForm = () => {
             Sign up
           </Link>
         </div>
-        
       </div>
     </div>
   );

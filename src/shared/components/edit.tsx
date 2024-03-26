@@ -9,22 +9,10 @@ interface EditProps {
   handleEdit: (v: string, id: number) => void;
 }
 
-export const Edit: React.FC<EditProps> = ({
-  id,
-  name,
-  value,
-  isEdit,
-  setValue,
-  handleEdit
-}) => {
+export const Edit: React.FC<EditProps> = ({ id, name, value, isEdit, setValue, handleEdit }) => {
   return (
     <div>
-      {!(isEdit === id) && (
-        <span
-        >
-          {name}
-        </span>
-      )}
+      {!(isEdit === id) && <span>{name}</span>}
 
       {isEdit === id && (
         <input

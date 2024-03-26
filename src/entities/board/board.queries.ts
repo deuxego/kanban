@@ -1,6 +1,10 @@
 import { useQuery } from 'react-query';
 import { createBoard, deleteBoard, editBoard, getBoard, getBoards } from './board.api';
-import { useOptimisticCreateMutation, useOptimisticEditMutation, useOptimisticRemoveMutation } from 'shared/hooks';
+import {
+  useOptimisticCreateMutation,
+  useOptimisticEditMutation,
+  useOptimisticRemoveMutation
+} from 'shared/hooks';
 import { Board, CreateBoardParams, DeleteBoardParams, EditBoardParams } from './board.types';
 import { queryClient } from 'shared/consts';
 
@@ -41,8 +45,5 @@ export const useBoardDelete = (workspaceId: number) => {
 };
 
 export const useBoardEdit = (workspaceId: number) => {
-  return useOptimisticEditMutation<Board, EditBoardParams>(editBoard, [
-    'boards',
-    workspaceId
-  ]);
+  return useOptimisticEditMutation<Board, EditBoardParams>(editBoard, ['boards', workspaceId]);
 };

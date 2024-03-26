@@ -8,7 +8,7 @@ export const SignupForm = () => {
 
   const [isError, setIsError] = useState(false);
   const { setAllUserData } = useUserStore();
-  
+
   const [fields, setFields] = useState({
     username: '',
     email: '',

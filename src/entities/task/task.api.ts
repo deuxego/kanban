@@ -25,5 +25,7 @@ export const deleteTask = async (params: DeleteTaskParams): Promise<Task> => {
 };
 
 export const editTask = async (params: EditTaskParams): Promise<Task> => {
-  return (await supabase.from('tasks').update({name: params.name}).eq('id', params.id).select('*')).data![0];
+  return (
+    await supabase.from('tasks').update({ name: params.name }).eq('id', params.id).select('*')
+  ).data![0];
 };
