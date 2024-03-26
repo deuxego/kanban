@@ -1,5 +1,5 @@
 import { supabase } from 'shared/lib';
-import { Board, CreateBoardParams, DeleteBoardParams } from './board.types';
+import { Board, CreateBoardParams, DeleteBoardParams, EditBoardParams } from './board.types';
 
 export const getBoards = async (workspaceId: number) => {
   if (workspaceId) {
@@ -28,4 +28,10 @@ export const createBoard = async (params: CreateBoardParams): Promise<Board> => 
 
 export const deleteBoard = async (params: DeleteBoardParams): Promise<Board> => {
   return (await supabase.from('boards').delete().eq('id', params.id).select('*')).data![0];
+};
+
+export const editBoard = async (params: EditBoardParams): Promise<Board> => {
+  return (
+    await supabase.from('boards').update({ name: params.name }).eq('id', params.id).select('*')
+  ).data![0];
 };

@@ -58,3 +58,24 @@ export const useOptimisticRemoveMutation = <T extends object, P extends object>(
     }
   });
 };
+
+export const useOptimisticEditMutation = <T extends object, P extends object>(
+  callback: MutationFunctionWithParams<T, P>,
+  queryKey: [string, number] | string
+) => {
+  return useMutation<T, Error, P>((params) => callback(params), {
+    onMutate: (params) => {
+      queryClient.setQueryData(queryKey, (oldData) => {
+        if (Array.isArray(oldData)) {
+          return oldData.map((item) =>
+            params.id === item.id ? { ...item, name: params.name } : item
+          );
+        }
+      });
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries(queryKey);
+    }
+  });
+};

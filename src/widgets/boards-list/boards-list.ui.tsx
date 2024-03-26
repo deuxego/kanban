@@ -1,9 +1,10 @@
-import { useBoardCreate, useBoardDelete, useBoards } from 'entities/board';
+import { useBoardCreate, useBoardDelete, useBoardEdit, useBoards } from 'entities/board';
 import { useEffect, useState } from 'react';
 import { LuKanban } from 'react-icons/lu';
 import { useNavigate, useParams } from 'react-router-dom';
 import { GoX } from 'react-icons/go';
 import { queryClient } from 'shared/consts';
+import { Edit } from './ui/edit';
 
 export const BoardsList = () => {
   const navigate = useNavigate();
@@ -14,9 +15,12 @@ export const BoardsList = () => {
 
   const { mutate: create } = useBoardCreate(Number(workspaceId));
   const { mutate: remove } = useBoardDelete(Number(workspaceId));
+  const { mutate: edit } = useBoardEdit(Number(workspaceId));
 
   const [hovered, setHovered] = useState<number | null>(null);
   const [isCreating, setIsCreating] = useState(false);
+  const [isEdit, setIsEdit] = useState<number | null>(null);
+  const [value, setValue] = useState<string | null>(null);
 
   const handleCreateBoard = (value: string) => {
     if (value.length > 1) {
@@ -28,6 +32,10 @@ export const BoardsList = () => {
   const handleDeleteBoard = (e: React.MouseEvent, id: number) => {
     e.stopPropagation();
     remove({ id });
+  };
+
+  const handleEdit = (v: string, id: number) => {
+    edit({ id, name: v });
   };
 
   const handleNavigateBoard = (id: number) => {
@@ -52,7 +60,17 @@ export const BoardsList = () => {
             key={id}
           >
             <LuKanban />
-            {name}
+
+            <Edit
+              id={id}
+              name={name}
+              value={value}
+              isEdit={isEdit}
+              setValue={setValue}
+              setIsEdit={setIsEdit}
+              handleEdit={handleEdit}
+            />
+
             {hovered === id && (
               <GoX className="absolute top-2 right-2" onClick={(e) => handleDeleteBoard(e, id)} />
             )}

@@ -10,6 +10,11 @@ export interface CreateBoardParams {
   workspace_id: number;
 }
 
+export interface EditBoardParams {
+  id: number;
+  name: string;
+}
+
 export interface DeleteBoardParams {
   id: number;
 }

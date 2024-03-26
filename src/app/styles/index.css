@@ -106,7 +106,7 @@
   /* //* board */
 
   .board-list-item {
-    @apply flex-center select-none relative gap-2 shadow-v1 bg-[#353535] text-2xl text-gray-300 hover:border-2 hover:border-white w-[230px] h-[150px]  rounded-[10px] cursor-pointer;
+    @apply flex-center select-none px-2 relative gap-2 shadow-v1 bg-[#353535] text-2xl text-gray-300 hover:border-2 hover:border-white w-[230px] h-[150px]  rounded-[10px] cursor-pointer;
   }
 
   /* //* page */
