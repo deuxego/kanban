@@ -5,13 +5,17 @@ import { Board, CreateBoardParams, DeleteBoardParams } from './board.types';
 import { queryClient } from 'shared/consts';
 
 export const useBoards = (workspaceId: number) => {
-  return useQuery<Board[]>(['boards', workspaceId], () => getBoards(workspaceId), {
-    initialData: () => {
-      return queryClient.getQueryData(['boards', workspaceId]);
-    },
-    staleTime: 3600,
-    cacheTime: 3600000
-  });
+  return useQuery<Board[]>(
+    ['boards', workspaceId],
+    () => getBoards(workspaceId) as Promise<Board[]>,
+    {
+      initialData: () => {
+        return queryClient.getQueryData(['boards', workspaceId]);
+      },
+      staleTime: 3600,
+      cacheTime: 3600000
+    }
+  );
 };
 
 export const useBoard = (boardId: number) => {

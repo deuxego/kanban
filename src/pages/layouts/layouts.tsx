@@ -17,7 +17,7 @@ export const MainLayout = () => {
       <Navbar />
     </div>
   ) : (
-    <Navigate to={'/auth/signin'} />
+    <Navigate to={'/auth/signup'} />
   );
 };
 

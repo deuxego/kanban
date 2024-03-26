@@ -20,7 +20,7 @@ export const Task: React.FC<TaskProps> = ({ id, name, handleRemoveTask }) => {
     >
       <div className="flex-y-center gap-1 relative">
         <RxDragHandleDots2 className="task-icon" />
-        <span className="pl-7">{name}</span>
+        <div className="pl-7 w-[200px] break-words">{name}</div>
       </div>
 
       <IoIosClose className="task-close" onClick={() => handleRemoveTask(id)} />

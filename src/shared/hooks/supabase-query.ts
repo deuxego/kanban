@@ -7,7 +7,8 @@ type MutationFunctionWithParams<T, P> = P extends undefined
 
 export const useOptimisticCreateMutation = <T extends object, P>(
   callback: MutationFunctionWithParams<T, P>,
-  queryKey: [string, number] | string
+  queryKey: [string, number] | string,
+  onSuccessFn?: (data: T) => void
 ) => {
   return useMutation<T, Error, P>((params) => callback(params), {
     onMutate: (params) => {
@@ -33,6 +34,8 @@ export const useOptimisticCreateMutation = <T extends object, P>(
           });
         }
       });
+
+      onSuccessFn && onSuccessFn(data);
     }
   });
 };

@@ -2,13 +2,15 @@ import { supabase } from 'shared/lib';
 import { Board, CreateBoardParams, DeleteBoardParams } from './board.types';
 
 export const getBoards = async (workspaceId: number) => {
-  return (
-    await supabase
-      .from('boards')
-      .select('*')
-      .eq('workspace_id', workspaceId)
-      .order('id', { ascending: true })
-  ).data as Board[];
+  if (workspaceId) {
+    return (
+      await supabase
+        .from('boards')
+        .select('*')
+        .eq('workspace_id', workspaceId)
+        .order('id', { ascending: true })
+    ).data as Board[];
+  }
 };
 
 export const getBoard = async (boardId: number) => {

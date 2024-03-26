@@ -1,11 +1,18 @@
 import { create } from 'zustand';
+import { User, getUser } from '.';
 
 interface StateSchema {
-  id: null | string;
-  setId: (id: string) => void;
+  user: null | User;
+  setUser: (id: string) => void;
+  setAllUserData: (p: User) => void;
 }
 
 export const useUserStore = create<StateSchema>((set) => ({
-  id: null,
-  setId: (id: string) => set({ id })
+  user: null,
+  setUser: async (id) => {
+    set({ user: await getUser(id) });
+  },
+  setAllUserData: (p: User) => {
+    set({ user: p });
+  }
 }));

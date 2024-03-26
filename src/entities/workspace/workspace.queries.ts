@@ -2,6 +2,7 @@ import { useQuery, useQueryClient } from 'react-query';
 import { createWorkspace, deleteWorkspace, getWorkspaces } from './workspace.api';
 import { CreateWorkspaceParams, DeleteWorkspaceParams, Workspace } from './workspace.types';
 import { useOptimisticCreateMutation, useOptimisticRemoveMutation } from 'shared/hooks';
+import { useNavigate } from 'react-router-dom';
 
 export const useWorkspaces = (userId: string) => {
   const queryClient = useQueryClient();
@@ -17,9 +18,12 @@ export const useWorkspaces = (userId: string) => {
 };
 
 export const useWorkspaceCreate = () => {
+  const navigate = useNavigate();
+
   return useOptimisticCreateMutation<Workspace, CreateWorkspaceParams>(
     createWorkspace,
-    'workspaces'
+    'workspaces',
+    (data) => navigate(`/workspace/${data.id}`)
   );
 };
 

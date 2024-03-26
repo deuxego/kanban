@@ -50,6 +50,7 @@ export const SidebarItems: FC<Props> = ({ contentType, userId }) => {
         ? createBoard({ name: value, workspace_id: Number(workspaceId) })
         : createWorkspace({ name: value, userId: userId as string });
     }
+
   };
 
   const handleRemove = (e: React.MouseEvent, id: number) => {

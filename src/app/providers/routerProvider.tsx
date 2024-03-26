@@ -31,6 +31,10 @@ const router = createBrowserRouter([
         element: <MainPage />
       },
       {
+        path: '/workspace/',
+        element: <WorkspacePage />
+      },
+      {
         path: '/workspace/:workspaceId',
         element: <WorkspacePage />
       },

@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { signUp } from '../auth.service';
+import { useUserStore } from 'entities/user';
 
 export const SignupForm = () => {
   const [isError, setIsError] = useState(false);
+  const { setAllUserData } = useUserStore();
 
   const [fields, setFields] = useState({
     username: '',
@@ -12,7 +14,7 @@ export const SignupForm = () => {
   });
 
   const handleSignup = () => {
-    signUp(fields.username, fields.email, fields.password, setIsError);
+    signUp(fields.username, fields.email, fields.password, setIsError, setAllUserData);
   };
 
   const handleInput = ({ field, v }: { field: keyof typeof fields; v: string }) => {
@@ -65,7 +67,7 @@ export const SignupForm = () => {
 
         <div className="flex-y-center gap-1 pt-4">
           <span>Already have an account?</span>
-          <Link to={'/auth/signup'} className="underline">
+          <Link to={'/auth/signin'} className="underline">
             Sign in
           </Link>
         </div>
