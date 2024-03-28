@@ -10,5 +10,6 @@ export const getUser = async (id: string): Promise<User> => {
 };
 
 export const getUserByUsername = async (username: string): Promise<User[]> => {
-  return (await supabase.from('users').select('*').ilike('username', `%${username}%`)).data as User[];
+  return (await supabase.from('users').select('*').ilike('username', `%${username}%`))
+    .data as User[];
 };

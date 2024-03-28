@@ -3,7 +3,7 @@ export interface Workspace {
   id: number;
   name: string;
   user_id: string | null;
-  shared_with: string[]
+  shared_with: string[];
 }
 
 export interface SharedWorkspace extends Workspace {
