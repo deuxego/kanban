@@ -1,5 +1,11 @@
 import { useQuery, useQueryClient } from 'react-query';
-import { createWorkspace, deleteWorkspace, editWorkspace, getWorkspaces } from './workspace.api';
+import {
+  createWorkspace,
+  deleteWorkspace,
+  editWorkspace,
+  getSharedWorkspaces,
+  getWorkspaces
+} from './workspace.api';
 import {
   CreateWorkspaceParams,
   DeleteWorkspaceParams,
@@ -24,6 +30,10 @@ export const useWorkspaces = (userId: string) => {
       return getWorkspaces(userId);
     }
   });
+};
+
+export const useSharedWorkspaces = (userId: string) => {
+  return useQuery('shared-workspaces', () => getSharedWorkspaces(userId));
 };
 
 export const useWorkspaceCreate = () => {

@@ -1,5 +1,6 @@
 import { Session } from '@supabase/supabase-js';
 import { User, createUser } from 'entities/user';
+import { queryClient } from 'shared/consts';
 import { supabase } from 'shared/lib';
 
 export const signIn = async (
@@ -63,7 +64,11 @@ export const signUp = async (
 };
 
 export const logout = () => {
-  localStorage.removeItem('supabase_token');
+  queryClient.clear();
+  queryClient.resetQueries();
+  queryClient.removeQueries();
+  localStorage.clear();
+  window.location.reload();
 };
 
 export const setSessionTime = (session: Session) => {

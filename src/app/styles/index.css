@@ -146,4 +146,22 @@
   .drop-zone {
     @apply task justify-center border-dashed text-gray-400 border-gray-400;
   }
+
+  /* //* shared workspace */
+
+  .share-workspace-btn {
+    @apply w-full flex-center text-[rgba(34,34,34,.5)] mb-2 gap-2 py-2 px-3 border-[.5px] border-[rgba(34,34,34,.6)] rounded-md cursor-pointer;
+  }
+
+  .search-placeholder{
+    font-stretch: condensed;
+  }
+
+  .search-list {
+    @apply flex-y-center flex-col gap-1 border-[.5px] border-gray-400 border-t-0 px-2 mt-[-13px] rounded-b-md py-4;
+  }
+
+  .search-list-item {
+    @apply text-gray-500 border-[.5px] border-gray-300 w-full rounded-md px-2 py-1 cursor-pointer;
+  }
 }

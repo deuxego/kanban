@@ -8,3 +8,7 @@ export const createUser = async (props: User): Promise<User> => {
 export const getUser = async (id: string): Promise<User> => {
   return (await supabase.from('users').select('*').eq('id', id)).data![0] as User;
 };
+
+export const getUserByUsername = async (username: string): Promise<User[]> => {
+  return (await supabase.from('users').select('*').ilike('username', `%${username}%`)).data as User[];
+};

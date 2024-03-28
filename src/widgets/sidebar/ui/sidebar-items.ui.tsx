@@ -1,6 +1,10 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { FC, ReactNode, useState } from 'react';
 import { ContentType } from '../sidebar.types';
 import {
+  SharedWorkspace,
+  Workspace,
+  useSharedWorkspaces,
   useWorkspaceCreate,
   useWorkspaceDelete,
   useWorkspaceEdit,
@@ -13,6 +17,7 @@ import { MdWorkspaces } from 'react-icons/md';
 import { IoIosClose } from 'react-icons/io';
 import { MdOutlineAdd } from 'react-icons/md';
 import { MdEdit } from 'react-icons/md';
+import { MdGroup } from 'react-icons/md';
 
 import classNames from 'classnames';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -44,6 +49,7 @@ export const SidebarItems: FC<Props> = ({ contentType, userId }) => {
 
   // useQuery
   const { data: workspaces } = useWorkspaces(userId as string);
+  const { data: sharedWorkspaces } = useSharedWorkspaces(userId as string);
   const { data: boards } = useBoards(Number(workspaceId));
 
   // useQuery mutations fn
@@ -80,7 +86,14 @@ export const SidebarItems: FC<Props> = ({ contentType, userId }) => {
   };
 
   // here we set items list
-  const list = contentType === ContentType.BOARD ? boards : workspaces;
+  const list =
+    contentType === ContentType.BOARD
+      ? boards
+      : //* here i append own workspaces and shared
+        [
+          ...((workspaces as Workspace[]) ?? []),
+          ...((sharedWorkspaces as SharedWorkspace[]) ?? [])
+        ];
 
   const icon =
     contentType === ContentType.BOARD ? (
@@ -113,7 +126,8 @@ export const SidebarItems: FC<Props> = ({ contentType, userId }) => {
 
       <div className="flex flex-col gap-2">
         {list &&
-          list.map(({ name, id }) => (
+          //@ts-ignore //! solved in future
+          list.map(({ name, id, shared }) => (
             <div
               className={className(id)}
               onClick={() => handleNavigate(id)}
@@ -122,7 +136,7 @@ export const SidebarItems: FC<Props> = ({ contentType, userId }) => {
               key={id}
             >
               <div className="flex-y-center gap-2">
-                {icon}
+                {shared ? <MdGroup /> : icon}
                 <Edit
                   id={id}
                   name={name}
@@ -133,12 +147,14 @@ export const SidebarItems: FC<Props> = ({ contentType, userId }) => {
                 />
               </div>
 
-              <div className="flex-y-center gap-1">
-                {hovered === id && <MdEdit onClick={(e) => handleInitEdit(e, id)} />}
-                {hovered === id && (
-                  <IoIosClose className="w-6 h-6" onClick={(e) => handleRemove(e, id)} />
-                )}
-              </div>
+              {!shared && (
+                <div className="flex-y-center gap-1">
+                  {hovered === id && <MdEdit onClick={(e) => handleInitEdit(e, id)} />}
+                  {hovered === id && (
+                    <IoIosClose className="w-6 h-6" onClick={(e) => handleRemove(e, id)} />
+                  )}
+                </div>
+              )}
             </div>
           ))}
       </div>
